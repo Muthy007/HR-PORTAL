@@ -1,0 +1,86 @@
+[
+  {
+    "empId": 1,
+    "employeeCode": "EMP001",
+    "fullName": "Muthu Raja",
+    "department": "IT",
+    "dateOfJoining": "2023-01-15"
+  },
+  {
+    "empId": 2,
+    "employeeCode": "EMP002",
+    "fullName": "Arun Kumar",
+    "department": "HR",
+    "dateOfJoining": "2022-07-10"
+  },
+  {
+    "empId": 3,
+    "employeeCode": "EMP003",
+    "fullName": "Priya Sharma",
+    "department": "Finance",
+    "dateOfJoining": "2021-03-25"
+  },
+  {
+    "empId": 4,
+    "employeeCode": "EMP004",
+    "fullName": "Karthik S",
+    "department": "IT",
+    "dateOfJoining": "2023-06-01"
+  },
+  {
+    "empId": 5,
+    "employeeCode": "EMP005",
+    "fullName": "Divya R",
+    "department": "Marketing",
+    "dateOfJoining": "2020-11-18"
+  },
+  {
+    "empId": 6,
+    "employeeCode": "EMP006",
+    "fullName": "Sanjay P",
+    "department": "Sales",
+    "dateOfJoining": "2022-02-14"
+  },
+  {
+    "empId": 7,
+    "employeeCode": "EMP007",
+    "fullName": "Meena Lakshmi",
+    "department": "IT",
+    "dateOfJoining": "2023-09-05"
+  },
+  {
+    "empId": 8,
+    "employeeCode": "EMP008",
+    "fullName": "Vikram Reddy",
+    "department": "Operations",
+    "dateOfJoining": "2019-05-30"
+  },
+  {
+    "empId": 9,
+    "employeeCode": "EMP009",
+    "fullName": "Anitha G",
+    "department": "Finance",
+    "dateOfJoining": "2021-12-12"
+  },
+  {
+    "empId": 10,
+    "employeeCode": "EMP010",
+    "fullName": "Rahul N",
+    "department": "IT",
+    "dateOfJoining": "2024-04-01"
+  },
+  {
+    "empId": 11,
+    "employeeCode": "EMP011",
+    "fullName": "Freak",
+    "department": "IT",
+    "dateOfJoining": "2026-02-28"
+  },
+  {
+    "empId": 12,
+    "employeeCode": "EMP012",
+    "fullName": "Madhu",
+    "department": "Trainee",
+    "dateOfJoining": "2026-03-02"
+  }
+]

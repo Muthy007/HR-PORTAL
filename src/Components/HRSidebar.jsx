@@ -1,123 +1,215 @@
-import { NavLink, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { NavLink, useNavigate, useLocation } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { Box, Typography, IconButton, Backdrop, Collapse, Divider } from "@mui/material"
+import MenuIcon from "@mui/icons-material/Menu"
 
 function HRSidebar() {
 
   const navigate = useNavigate()
+  const location = useLocation()
   const [isOpen, setIsOpen] = useState(false)
+  const [isPayrollOpen, setIsPayrollOpen] = useState(
+    location.pathname.includes('/hr/payroll')
+  )
 
-  const menuClass =
-    "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200"
-
-  const activeClass =
-    "bg-white/20 text-white shadow"
-
-  const normalClass =
-    "text-gray-300 hover:bg-white/10 hover:text-white"
-
-
+  useEffect(() => {
+    if (location.pathname.includes('/hr/payroll')) {
+      setIsPayrollOpen(true)
+    }
+  }, [location.pathname])
 
   const handleMenuClick = () => {
     setIsOpen(false)
   }
 
+  const getMenuSx = (isActive) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1.5,
+    px: 2,
+    py: 1.5,
+    borderRadius: 2,
+    transition: 'all 200ms',
+    textDecoration: 'none',
+    width: '100%',
+    textAlign: 'left',
+    justifyContent: 'space-between',
+    border: 'none',
+    cursor: 'pointer',
+    fontFamily: 'inherit',
+    fontSize: '1rem',
+    ...(isActive
+      ? {
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          color: 'white',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+        }
+      : {
+          backgroundColor: 'transparent',
+          color: 'rgb(209, 213, 219)',
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            color: 'white'
+          }
+        })
+  })
+
   return (
     <>
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/20 z-40"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
+      <Backdrop
+        open={isOpen}
+        onClick={() => setIsOpen(false)}
+        sx={{ zIndex: 40, backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
+      />
 
-      {/* Toggle Button */}
-      <button
+    
+      <IconButton
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-[22px] left-4 z-[70] text-white hover:text-gray-200 text-3xl hover:bg-white/10 px-2 rounded transition-colors"
+        sx={{
+          position: 'fixed',
+          top: '22px',
+          left: '16px',
+          zIndex: 70,
+          color: 'white',
+          padding: '8px',
+          borderRadius: 1,
+          transition: 'color 150ms, background-color 150ms',
+          '&:hover': {
+            color: 'rgb(229, 231, 235)',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)'
+          }
+        }}
       >
-        ☰
-      </button>
+        <MenuIcon sx={{ fontSize: '1.875rem' }} />
+      </IconButton>
 
-      {/* Sidebar */}
-      <div
-        className={`fixed top-0 left-0 h-screen w-64 bg-[rgb(90,114,90)]/90 backdrop-blur-md text-white p-5 flex flex-col
-        transform transition-transform duration-300 ease-in-out z-50
-        ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+    
+      <Box
+        sx={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          height: '100vh',
+          width: '256px',
+          backgroundColor: 'rgba(90, 114, 90, 0.9)',
+          backdropFilter: 'blur(12px)',
+          color: 'white',
+          p: 2.5,
+          display: 'flex',
+          flexDirection: 'column',
+          transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
+          transition: 'transform 300ms ease-in-out',
+          zIndex: 50,
+        }}
       >
-
-        <h1 className="text-2xl font-bold mb-8 mt-12">
+        <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 3, mt: 6, fontSize: '1.5rem', lineHeight: '2rem' }}>
           HR Portal
-        </h1>
+        </Typography>
 
-
-        <nav className="flex flex-col space-y-1">
-
-          <NavLink
+        <Box component="nav" sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+          
+          <Box
+            component={NavLink}
             to="/hr/prejoining"
             onClick={handleMenuClick}
-            className={({ isActive }) =>
-              `${menuClass} ${isActive ? activeClass : normalClass}`
-            }
+            sx={getMenuSx(location.pathname === '/hr/prejoining')}
           >
             Pre-Joining
-          </NavLink>
+          </Box>
 
-          <div className="mx-2 border-b border-white/20"></div>
+          <Divider sx={{ mx: 1, my: 0.5, borderColor: 'rgba(255, 255, 255, 0.2)' }} />
 
-          <NavLink
+          <Box
+            component={NavLink}
             to="/hr/employment"
             onClick={handleMenuClick}
-            className={({ isActive }) =>
-              `${menuClass} ${isActive ? activeClass : normalClass}`
-            }
+            sx={getMenuSx(location.pathname === '/hr/employment')}
           >
             During Employment
-          </NavLink>
+          </Box>
 
-          <div className="mx-2 border-b border-white/20"></div>
+          <Divider sx={{ mx: 1, my: 0.5, borderColor: 'rgba(255, 255, 255, 0.2)' }} />
 
-          <NavLink
-            to="/hr/payroll"
-            onClick={handleMenuClick}
-            className={({ isActive }) =>
-              `${menuClass} ${isActive ? activeClass : normalClass}`
-            }
-          >
-            Payroll & Compliance
-          </NavLink>
+          <Box>
+            <Box
+              component="button"
+              onClick={() => setIsPayrollOpen(!isPayrollOpen)}
+              sx={getMenuSx(location.pathname.includes('/hr/payroll'))}
+            >
+              <Typography component="span" sx={{ fontSize: '1rem', fontFamily: 'inherit' }}>Payroll & Compliance</Typography>
+              <Typography component="span" sx={{ fontSize: '0.75rem' }}>{isPayrollOpen ? '▲' : '▼'}</Typography>
+            </Box>
 
-          <div className="mx-2 border-b border-white/20"></div>
+            <Collapse in={isPayrollOpen}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, pl: 2, mt: 0.5 }}>
+                <Box
+                  component={NavLink}
+                  to="/hr/payroll"
+                  end
+                  onClick={handleMenuClick}
+                  sx={{
+                    ...getMenuSx(location.pathname === '/hr/payroll'),
+                    fontSize: '0.875rem',
+                    py: 1
+                  }}
+                >
+                  Payroll Overview
+                </Box>
+                <Box
+                  component={NavLink}
+                  to="/hr/payroll-master"
+                  onClick={handleMenuClick}
+                  sx={{
+                    ...getMenuSx(location.pathname === '/hr/payroll-master'),
+                    fontSize: '0.875rem',
+                    py: 1
+                  }}
+                >
+                  Payroll Master
+                </Box>
+              </Box>
+            </Collapse>
+          </Box>
 
-          <NavLink
-            to="/hr/reports"
-            onClick={handleMenuClick}
-            className={({ isActive }) =>
-              `${menuClass} ${isActive ? activeClass : normalClass}`
-            }
-          >
-            Reports
-          </NavLink>
+          <Divider sx={{ mx: 1, my: 0.5, borderColor: 'rgba(255, 255, 255, 0.2)' }} />
 
-          <div className="mx-2 border-b border-white/20"></div>
-
-          <NavLink
+          <Box
+            component={NavLink}
             to="/hr/profile"
             onClick={handleMenuClick}
-            className={({ isActive }) =>
-              `${menuClass} ${isActive ? activeClass : normalClass}`
-            }
+            sx={getMenuSx(location.pathname === '/hr/profile')}
           >
             HR Profile
-          </NavLink>
+          </Box>
 
-        </nav>
+        </Box>
 
-
-
-      </div>
+        {/* Bottom Navigation Button */}
+        <Box sx={{ mt: 'auto', pt: 2 }}>
+          <Box
+            component={NavLink}
+            to="/travel/department"
+            onClick={handleMenuClick}
+            sx={{
+              ...getMenuSx(false),
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              justifyContent: 'center',
+              textAlign: 'center',
+              color: 'white',
+              fontWeight: 'bold',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                color: 'white'
+              }
+            }}
+          >
+            Travel Portal
+          </Box>
+        </Box>
+      </Box>
     </>
   )
 }
 
 export default HRSidebar
-

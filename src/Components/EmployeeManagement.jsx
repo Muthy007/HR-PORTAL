@@ -30,7 +30,7 @@ function EmployeeManagement() {
 
     setEmployees([...employees, newEmployee])
 
-    // Log the newly registered employee details in JSON format as requested
+   
     console.log("Newly Registered Employee Details:", JSON.stringify(newEmployee, null, 2))
 
     setFormData({
@@ -53,7 +53,7 @@ function EmployeeManagement() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        {/* Employee List */}
+     
         <div className="lg:col-span-2 bg-white rounded-xl shadow p-5">
 
           <h3 className="text-lg font-semibold mb-4">
@@ -102,7 +102,6 @@ function EmployeeManagement() {
 
         </div>
 
-        {/* Add Employee Form */}
         <div className="bg-white rounded-xl shadow p-5">
 
           <h3 className="text-lg font-semibold mb-4">

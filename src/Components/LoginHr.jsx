@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate, Link } from "react-router-dom"
+import { API_BASE_URL } from "../assets/connection"
 
 function LoginHR() {
 
@@ -25,28 +26,44 @@ function LoginHR() {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     setError("")
 
-    setTimeout(() => {
-      setLoading(false)
-      const storedData = localStorage.getItem("hr_credentials")
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/EmployeeMaster/HRLogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "accept": "*/*"
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
 
-      if (storedData) {
-        const credentials = JSON.parse(storedData)
-        if (credentials.email === formData.email && credentials.password === formData.password) {
-          // Store token/flag to indicate active session if needed
-          localStorage.setItem("hr_logged_in", "true")
-          navigate("/hr/prejoining")
-        } else {
-          setError("Invalid email or password")
-        }
+      if (response.ok) {
+        const data = await response.json();
+        sessionStorage.setItem("hr_logged_in", "true")
+        sessionStorage.setItem("hr_credentials", JSON.stringify({
+          id: data.id,
+          name: data.hrName,
+          email: data.email
+        }));
+        setLoading(false)
+        navigate("/hr/prejoining")
       } else {
-        setError("No HR account found. Please register first.")
+        const errData = await response.json().catch(() => ({}));
+        setError(errData.message || "Invalid email or password")
+        setLoading(false)
       }
-    }, 1000)
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Network error. Please try again.")
+      setLoading(false)
+    }
   }
 
   return (

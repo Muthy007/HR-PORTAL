@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate, Link } from "react-router-dom"
+import { API_BASE_URL } from "../assets/connection"
 
 function RegisterHR() {
 
@@ -13,6 +14,7 @@ function RegisterHR() {
   })
 
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const [animate, setAnimate] = useState(false)
 
   useEffect(() => {
@@ -20,28 +22,49 @@ function RegisterHR() {
   }, [])
 
   const handleChange = (e) => {
+    let value = e.target.value;
+    if (e.target.name === 'phone') {
+        value = value.replace(/[^0-9]/g, '');
+    }
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: value
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+    setError("")
 
-    // Save to local storage
-    localStorage.setItem("hr_credentials", JSON.stringify({
-      email: formData.email,
-      password: formData.password,
-      name: formData.name,
-      phone: formData.phone
-    }))
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/EmployeeMaster/HRRegister`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "accept": "*/*"
+        },
+        body: JSON.stringify({
+          hrName: formData.name,
+          email: formData.email,
+          phoneNumber: formData.phone,
+          password: formData.password
+        })
+      });
 
-    setTimeout(() => {
+      if (response.ok) {
+        setLoading(false)
+        navigate("/")
+      } else {
+        const errData = await response.json().catch(() => ({}));
+        setError(errData.message || "Registration failed")
+        setLoading(false)
+      }
+    } catch (err) {
+      console.error(err)
+      setError("Network error. Please try again.")
       setLoading(false)
-      navigate("/")
-    }, 1000)
+    }
   }
 
   return (
@@ -66,6 +89,12 @@ function RegisterHR() {
           <p className="text-center text-gray-200 mb-6">
             HR access registration
           </p>
+
+          {error && (
+            <div className="bg-red-500/20 border border-red-500 text-red-100 px-4 py-2 rounded-lg mb-4 text-sm text-center">
+              {error}
+            </div>
+          )}
 
           <input
             type="text"
@@ -92,6 +121,7 @@ function RegisterHR() {
           <input
             type="tel"
             name="phone"
+            value={formData.phone}
             placeholder="Phone Number"
             onChange={handleChange}
             required

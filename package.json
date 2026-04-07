@@ -10,12 +10,26 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fontsource/roboto": "^5.2.10",
+    "@mui/icons-material": "^7.3.9",
+    "@mui/material": "^7.3.9",
+    "@mui/x-date-pickers": "^8.27.2",
     "@tailwindcss/vite": "^4.1.18",
+    "axios": "^1.13.6",
+    "dayjs": "^1.11.20",
+    "echarts": "^6.0.0",
+    "echarts-for-react": "^3.0.6",
+    "pdf-lib": "^1.17.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.0",
+    "react-is": "^18.3.1",
     "react-router-dom": "^6.30.3",
+    "recharts": "^3.8.0",
     "router-dom": "^3.0.3",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

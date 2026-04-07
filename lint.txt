@@ -1,0 +1,11 @@
+
+D:\Company\Hr_Portal\Hr_Portal\src\Components\hr\DuringEmployment.jsx
+   26:11  error  'navigate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                  no-unused-vars
+  155:11  error  'handleSave' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                no-unused-vars
+  201:11  error  'getStatusColor' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u            no-unused-vars
+  212:11  error  'handleDownloadAttendance' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  214:11  error  'parseExcelTime' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u            no-unused-vars
+  908:55  error  'totalPages' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                no-unused-vars
+
+✖ 6 problems (6 errors, 0 warnings)
+
